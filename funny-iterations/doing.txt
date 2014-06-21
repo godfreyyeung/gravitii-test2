@@ -1,0 +1,40 @@
+-----------------------------------------------------------------------------------------
+--
+-- main.lua
+--
+-----------------------------------------------------------------------------------------
+
+-- Your code here
+
+-- start physics
+local physics = require(physics)
+physics.start()
+physics.setGravity( 0, 0 ) -- set Gravity to none for both x and y
+physics.setScale( 80 ) --  want a value greater or equal to 60 for large objects. play with this value. 
+--physics.setDrawMode( hybrid)
+
+local background = display.newImageRect(background.jpg, display.contentWidth, display.contentHeight)
+background.anchorX = 0 --odd.... image doesnt' scale without anchors.. why
+background.anchorY = 0
+
+local planetGroup = display.newGroup( )
+
+local planet1 = display.newImageRect(planetGroup, g3_blueplanet.png, 75, 75)
+planet1.x = 110
+planet1.y = 150
+
+local planet2 = display.newImageRect(planetGroup, g3_redplanet.png, 75, 75)
+planet2.x = 215
+planet2.y = 305
+planet2rotate(-90)
+
+local astronaut = display.newImageRect(astronaut_man.png, 15, 15)
+astronaut.x = 130
+astronaut.y = 460
+
+physics.addBody(planet1, static, {radius=40, density=500, friction=.7, bounce=-100 } )
+physics.addBody( planet2, static, {radius=40, density=100, friction=.7, bounce=-100 } )
+physics.addBody( astronaut, dynamic, {density=2, friction=.4, bounce=-100 } )
+
+
+astronautapplyLinearImpulse( 0, -.1, astronaut.x, astronaut.y )
